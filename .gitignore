@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code
+.claude/
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+out/
+
+# Temp files
+*.tmp
+*.log
+.thumbnails/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Test directories (optional)
+vedio_test/
+video_dingtalk/

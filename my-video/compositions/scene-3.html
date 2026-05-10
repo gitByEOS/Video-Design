@@ -15,19 +15,20 @@ body { width: 1280px; height: 720px; overflow: hidden; font-family: 'PingFang SC
 .card { width: 600px; background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px; box-shadow: 0 12px 48px rgba(0,0,0,0.12); opacity: 0; }
 .card-icon { width: 48px; height: 48px; background: #e3f2fd; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
 .card-title { color: #1a73e8; font-size: 24px; font-weight: 700; margin-bottom: 16px; }
-.gantt-row { display: flex; align-items: center; gap: 12px; margin-bottom: 0; }
+.gantt-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 .gantt-label { width: 80px; color: #666; font-size: 14px; text-align: right; flex-shrink: 0; opacity: 0; }
-.bar-track { flex: 1; height: 28px; border-radius: 6px; background: rgba(26,115,232,0.08); position: relative; margin-bottom: 14px; }
-.gantt-bar { height: 28px; border-radius: 6px; position: absolute; width: 0; overflow: hidden; }
+.gantt-bar { height: 28px; border-radius: 6px; flex: 1; position: relative; width: 0; overflow: hidden; }
 .gantt-bar span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: white; font-size: 13px; font-weight: 600; white-space: nowrap; }
-.bar-track { height: 28px; border-radius: 6px; background: rgba(26,115,232,0.1); position: relative; margin-bottom: 14px; }
-.bar1 { background: linear-gradient(90deg, #1a73e8, #4fc3f7); left: 0; }
-.bar2 { background: linear-gradient(90deg, #4fc3f7, #81d4fa); left: 15%; }
-.bar3 { background: linear-gradient(90deg, #81d4fa, #b3e5fc); left: 50%; }
+.bar1 { background: linear-gradient(90deg, #1a73e8, #4fc3f7); }
+.bar2 { background: linear-gradient(90deg, #4fc3f7, #81d4fa); }
+.bar3 { background: linear-gradient(90deg, #81d4fa, #b3e5fc); }
+.bar1-fill { height: 100%; background: linear-gradient(90deg, #1a73e8, #4fc3f7); border-radius: 6px; width: 30%; }
+.bar2-fill { height: 100%; background: linear-gradient(90deg, #4fc3f7, #81d4fa); border-radius: 6px; width: 50%; margin-left: 15%; }
+.bar3-fill { height: 100%; background: linear-gradient(90deg, #81d4fa, #b3e5fc); border-radius: 6px; width: 40%; margin-left: 40%; }
 </style>
 </head>
 <body>
-<div class="scene" id="scene-bg">
+<div class="scene" id="scene-bg" data-composition-id="scene-3" data-width="1280" data-height="720">
   <div class="left-panel">
     <div class="step-num" id="step-num">2</div>
     <svg class="step-icon" id="step-icon" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="white" stroke-width="3" fill="none"/><path d="M20 10v10l7 4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
@@ -42,15 +43,15 @@ body { width: 1280px; height: 720px; overflow: hidden; font-family: 'PingFang SC
       <div class="card-title">甘特图时间线</div>
       <div class="gantt-row">
         <span class="gantt-label" id="gl1">入场动画</span>
-        <div class="bar-track"><div class="gantt-bar bar1" id="bar1"><span>0s - 6s</span></div></div>
+        <div class="gantt-bar" id="bar1"><span>0s - 6s</span></div>
       </div>
       <div class="gantt-row">
         <span class="gantt-label" id="gl2">内容展示</span>
-        <div class="bar-track"><div class="gantt-bar bar2" id="bar2"><span>3s - 13s</span></div></div>
+        <div class="gantt-bar" id="bar2"><span>3s - 13s</span></div>
       </div>
       <div class="gantt-row">
         <span class="gantt-label" id="gl3">过渡转场</span>
-        <div class="bar-track"><div class="gantt-bar bar3" id="bar3"><span>10s - 20s</span></div></div>
+        <div class="gantt-bar" id="bar3"><span>10s - 20s</span></div>
       </div>
     </div>
   </div>
@@ -65,21 +66,16 @@ body { width: 1280px; height: 720px; overflow: hidden; font-family: 'PingFang SC
     .fromTo('#phase-label', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6 }, 2)
     .fromTo('#phase-title', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6 }, 2.3)
     .fromTo('#card', { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }, 3)
-    // 甘特条按实际时间比例展开：bar1(30%), bar2(50%), bar3(50%)
-    .fromTo('#bar1', { width: 0 }, { width: '30%', duration: 0.8, ease: 'power2.out' }, 4)
+    .to('#bar1', { width: '100%', duration: 1, ease: 'power2.out' }, 4)
     .to('#gl1', { opacity: 1, duration: 0.4 }, 4)
-    .fromTo('#bar2', { width: 0 }, { width: '50%', duration: 0.8, ease: 'power2.out' }, 5)
+    .to('#bar2', { width: '100%', duration: 1, ease: 'power2.out' }, 5)
     .to('#gl2', { opacity: 1, duration: 0.4 }, 5)
-    .fromTo('#bar3', { width: 0 }, { width: '50%', duration: 0.8, ease: 'power2.out' }, 6)
+    .to('#bar3', { width: '100%', duration: 1, ease: 'power2.out' }, 6)
     .to('#gl3', { opacity: 1, duration: 0.4 }, 6)
     .to('#card', { boxShadow: '0 12px 60px rgba(26,115,232,0.25)', duration: 2, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 10);
 
-  tl.call(function() { tl.restart(); }, null, 20);
-
   window.__timelines = window.__timelines || {};
   window.__timelines['scene-3'] = tl;
-
-  tl.play();
 })();
 </script>
 </body>
