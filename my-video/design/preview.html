@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Design 介绍 - 静态预览</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { font-size: 28px; font-weight: 700; color: #1a73e8; margin-bottom: 8px; }
+    .header p { font-size: 14px; color: rgba(255,255,255,0.5); }
+    .main-container { display: flex; gap: 20px; max-width: 1600px; margin: 0 auto; }
+    .left-panel { flex: 1; min-width: 0; }
+    .scene-block {
+      margin-bottom: 30px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .scene-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px; padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .scene-title { font-size: 16px; font-weight: 600; color: #4fc3f7; }
+    .scene-time { font-size: 13px; color: rgba(255,255,255,0.4); font-family: "JetBrains Mono", monospace; }
+    .scene-frame {
+      width: 100%; background: #000; border-radius: 8px;
+      overflow: hidden; position: relative; aspect-ratio: 1280/720;
+    }
+    .scene-frame iframe {
+      position: absolute; top: 0; left: 0; width: 1280px; height: 720px;
+      border: none; transform-origin: 0 0;
+    }
+    .right-panel {
+      width: 300px; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      padding: 20px; position: sticky; top: 20px; height: fit-content;
+    }
+    .timeline-title {
+      font-size: 16px; font-weight: 600; color: #4fc3f7;
+      margin-bottom: 20px; padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .timeline { position: relative; padding-left: 20px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 6px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(180deg, #1a73e8, #4fc3f7);
+    }
+    .timeline-item { position: relative; margin-bottom: 24px; }
+    .timeline-item::before {
+      content: ""; position: absolute; left: -18px; top: 4px;
+      width: 10px; height: 10px; background: #1a73e8; border-radius: 50%;
+      border: 2px solid #0a0a0f;
+    }
+    .timeline-item.active::before {
+      background: #4fc3f7; box-shadow: 0 0 10px #4fc3f7;
+    }
+    .timeline-scene { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .timeline-range { font-size: 12px; color: rgba(255,255,255,0.5); font-family: "JetBrains Mono", monospace; }
+    .timeline-desc { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 6px; line-height: 1.4; }
+    .total-duration {
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1); text-align: center;
+    }
+    .total-duration span { font-size: 13px; color: rgba(255,255,255,0.5); }
+    .total-duration .duration { font-size: 24px; font-weight: 700; color: #4fc3f7; font-family: "JetBrains Mono", monospace; }
+    .stage-badge {
+      display: inline-block; padding: 4px 12px;
+      background: rgba(26,115,232,0.15); border: 1px solid rgba(26,115,232,0.3);
+      border-radius: 20px; font-size: 12px; color: #4fc3f7; margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Video Design 技能介绍</h1>
+    <p>阶段一：静态布局确认</p>
+  </div>
+
+  <div class="main-container">
+    <div class="left-panel">
+      <div class="scene-block">
+        <div class="scene-header">
+          <span class="scene-title">第一幕：开场标题</span>
+          <span class="scene-time">0.0s - 20.0s</span>
+        </div>
+        <div class="scene-frame"><iframe src="scene-1.html"></iframe></div>
+      </div>
+      <div class="scene-block">
+        <div class="scene-header">
+          <span class="scene-title">第二幕：阶段一 静态布局</span>
+          <span class="scene-time">20.0s - 40.0s</span>
+        </div>
+        <div class="scene-frame"><iframe src="scene-2.html"></iframe></div>
+      </div>
+      <div class="scene-block">
+        <div class="scene-header">
+          <span class="scene-title">第三幕：阶段二 甘特时间线</span>
+          <span class="scene-time">40.0s - 60.0s</span>
+        </div>
+        <div class="scene-frame"><iframe src="scene-3.html"></iframe></div>
+      </div>
+      <div class="scene-block">
+        <div class="scene-header">
+          <span class="scene-title">第四幕：阶段三 代码实现</span>
+          <span class="scene-time">60.0s - 80.0s</span>
+        </div>
+        <div class="scene-frame"><iframe src="scene-4.html"></iframe></div>
+      </div>
+      <div class="scene-block">
+        <div class="scene-header">
+          <span class="scene-title">第五幕：阶段四 整合交付</span>
+          <span class="scene-time">80.0s - 100.0s</span>
+        </div>
+        <div class="scene-frame"><iframe src="scene-5.html"></iframe></div>
+      </div>
+      <div class="scene-block">
+        <div class="scene-header">
+          <span class="scene-title">第六幕：结尾号召</span>
+          <span class="scene-time">100.0s - 120.0s</span>
+        </div>
+        <div class="scene-frame"><iframe src="scene-6.html"></iframe></div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="timeline-title">时间线</div>
+      <div class="timeline">
+        <div class="timeline-item active">
+          <div class="timeline-scene">第一幕</div>
+          <div class="timeline-range">0.0s - 20.0s</div>
+          <div class="timeline-desc">HyperFrames Logo<br>Video Design 标题<br>四阶段工作流副标题</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-scene">第二幕</div>
+          <div class="timeline-range">20.0s - 40.0s</div>
+          <div class="timeline-desc">阶段一 静态布局设计<br>元素定义与布局确认</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-scene">第三幕</div>
+          <div class="timeline-range">40.0s - 60.0s</div>
+          <div class="timeline-desc">阶段二 动态时间线<br>甘特图动画编排</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-scene">第四幕</div>
+          <div class="timeline-range">60.0s - 80.0s</div>
+          <div class="timeline-desc">阶段三 代码实现<br>GSAP Timeline 动画</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-scene">第五幕</div>
+          <div class="timeline-range">80.0s - 100.0s</div>
+          <div class="timeline-desc">阶段四 整合交付<br>MP4 渲染输出</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-scene">第六幕</div>
+          <div class="timeline-range">100.0s - 120.0s</div>
+          <div class="timeline-desc">结尾标语<br>开始使用号召</div>
+        </div>
+      </div>
+      <div class="total-duration">
+        <span>总时长</span>
+        <div class="duration">120.0s</div>
+      </div>
+      <div style="text-align: center;">
+        <span class="stage-badge">阶段一：静态布局</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateIframeScales() {
+      const frames = document.querySelectorAll('.scene-frame');
+      frames.forEach(frame => {
+        const iframe = frame.querySelector('iframe');
+        if (iframe) {
+          const containerWidth = frame.clientWidth;
+          const scale = containerWidth / 1280;
+          iframe.style.transform = `scale(${scale})`;
+          frame.style.height = `${720 * scale}px`;
+        }
+      });
+    }
+    window.addEventListener('load', updateIframeScales);
+    window.addEventListener('resize', updateIframeScales);
+  </script>
+</body>
+</html>
