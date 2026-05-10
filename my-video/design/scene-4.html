@@ -7,43 +7,70 @@
 body { width: 1280px; height: 720px; overflow: hidden; font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; }
 .scene { width: 1280px; height: 720px; background: linear-gradient(135deg, #1a73e8 0%, #4fc3f7 50%, #e3f2fd 100%); display: flex; position: relative; }
 .left-panel { width: 400px; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 60px; }
-.step-num { width: 56px; height: 56px; border-radius: 50%; background: white; color: #1a73e8; font-size: 28px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-.step-icon { width: 40px; height: 40px; margin-bottom: 16px; }
-.phase-label { color: rgba(255,255,255,0.8); font-size: 18px; font-weight: 500; margin-bottom: 8px; }
-.phase-title { color: white; font-size: 36px; font-weight: 800; }
+.step-num { width: 56px; height: 56px; border-radius: 50%; background: white; color: #1a73e8; font-size: 28px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); opacity: 0; }
+.step-icon { width: 40px; height: 40px; margin-bottom: 16px; opacity: 0; }
+.phase-label { color: rgba(255,255,255,0.8); font-size: 18px; font-weight: 500; margin-bottom: 8px; opacity: 0; }
+.phase-title { color: white; font-size: 36px; font-weight: 800; opacity: 0; }
 .right-panel { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px; }
-.card { width: 600px; background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px; box-shadow: 0 12px 48px rgba(0,0,0,0.12); }
+.card { width: 600px; background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px; box-shadow: 0 12px 48px rgba(0,0,0,0.12); opacity: 0; }
 .card-icon { width: 48px; height: 48px; background: #e3f2fd; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
 .card-title { color: #1a73e8; font-size: 24px; font-weight: 700; margin-bottom: 16px; }
 .code-block { background: #f5f7fa; border-radius: 12px; padding: 20px; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 14px; line-height: 1.8; color: #333; }
+.code-line { opacity: 0; display: block; }
 .code-keyword { color: #1a73e8; font-weight: 600; }
 .code-string { color: #34a853; }
 .code-comment { color: #999; }
 </style>
 </head>
 <body>
-<div class="scene">
+<div class="scene" id="scene-bg">
   <div class="left-panel">
-    <div class="step-num">3</div>
-    <svg class="step-icon" viewBox="0 0 40 40" fill="none"><path d="M15 10l-8 10 8 10M25 10l8 10-8 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <div class="phase-label">阶段三</div>
-    <div class="phase-title">动画代码实现</div>
+    <div class="step-num" id="step-num">3</div>
+    <svg class="step-icon" id="step-icon" viewBox="0 0 40 40" fill="none"><path d="M15 10l-8 10 8 10M25 10l8 10-8 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="phase-label" id="phase-label">阶段三</div>
+    <div class="phase-title" id="phase-title">动画代码实现</div>
   </div>
   <div class="right-panel">
-    <div class="card">
+    <div class="card" id="card">
       <div class="card-icon">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="card-title">GSAP Timeline 代码</div>
       <div class="code-block">
-<span class="code-keyword">const</span> tl = gsap.timeline();<br>
-tl.<span class="code-keyword">from</span>(<span class="code-string">'#el'</span>, {<br>
-&nbsp;&nbsp;opacity: <span class="code-string">0</span>,<br>
-&nbsp;&nbsp;y: <span class="code-string">40</span><br>
-});
+        <span class="code-line" id="cl1"><span class="code-keyword">const</span> tl = gsap.timeline();</span>
+        <span class="code-line" id="cl2">tl.<span class="code-keyword">from</span>(<span class="code-string">'#el'</span>, {</span>
+        <span class="code-line" id="cl3">&nbsp;&nbsp;opacity: <span class="code-string">0</span>,</span>
+        <span class="code-line" id="cl4">&nbsp;&nbsp;y: <span class="code-string">40</span></span>
+        <span class="code-line" id="cl5">});</span>
       </div>
     </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<script>
+(function() {
+  var tl = gsap.timeline({ paused: true });
+
+  tl.fromTo('#step-num', { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.7)' }, 0.5)
+    .fromTo('#step-icon', { opacity: 0, rotation: -90 }, { opacity: 1, rotation: 0, duration: 0.6 }, 1)
+    .fromTo('#phase-label', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6 }, 2)
+    .fromTo('#phase-title', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6 }, 2.3)
+    .fromTo('#card', { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }, 3)
+    .to('#cl1', { opacity: 1, duration: 0.3 }, 4)
+    .to('#cl2', { opacity: 1, duration: 0.3 }, 4.5)
+    .to('#cl3', { opacity: 1, duration: 0.3 }, 5)
+    .to('#cl4', { opacity: 1, duration: 0.3 }, 5.5)
+    .to('#cl5', { opacity: 1, duration: 0.3 }, 6)
+    .to('.code-keyword', { color: '#4fc3f7', duration: 0.3, stagger: 0.2 }, 7)
+    .to('#card', { boxShadow: '0 12px 60px rgba(26,115,232,0.25)', duration: 2, yoyo: true, repeat: 2, ease: 'sine.inOut' }, 10);
+
+  tl.call(function() { tl.restart(); }, null, 20);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines['scene-4'] = tl;
+
+  tl.play();
+})();
+</script>
 </body>
 </html>
